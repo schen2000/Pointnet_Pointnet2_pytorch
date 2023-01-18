@@ -106,3 +106,11 @@ class clutter       , IoU: 0.416
 2023-01-18 11:12:03,487 - Model - INFO - Namespace(batch_size=32, gpu='0', log_dir='pointnet2_sem_seg', num_point=4096, num_votes=3, test_area=5, visual=True)
 2023-01-18 11:12:10,570 - Model - INFO - The number of test data is: 67
 2023-01-18 11:12:10,619 - Model - INFO - ---- EVALUATION WHOLE SCENE----
+2023-01-18 12:06:59,874 - Model - INFO - Mean IoU of Area_5_office_2: 0.6739
+2023-01-18 13:32:21,551 - Model - INFO - Mean IoU of Area_5_lobby_1: 0.8012
+2023-01-18 15:24:14,457 - Model - INFO - Mean IoU of Area_5_office_19: 0.6980
+2023-01-18 16:06:31,067 - Model - INFO - Mean IoU of Area_5_office_25: 0.7231
+2023-01-18 16:59:52,443 - Model - INFO - Mean IoU of Area_5_office_31: 0.5939
+2023-01-18 17:27:43,081 - Model - INFO - Mean IoU of Area_5_office_30: 0.7665
+2023-01-18 19:12:07,747 - Model - INFO - Mean IoU of Area_5_office_24: 0.5942
+2023-01-18 20:31:57,789 - Model - INFO - Mean IoU of Area_5_office_18: 0.6513
