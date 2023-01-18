@@ -15,6 +15,10 @@ from tqdm import tqdm
 import provider
 import numpy as np
 
+hasCuda_ = torch.cuda.is_available()
+print("hasCuda_:")
+print(hasCuda_)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
@@ -87,8 +91,15 @@ def main(args):
     '''MODEL LOADING'''
     model_name = os.listdir(experiment_dir + '/logs')[0].split('.')[0]
     MODEL = importlib.import_module(model_name)
-    classifier = MODEL.get_model(NUM_CLASSES).cuda()
-    checkpoint = torch.load(str(experiment_dir) + '/checkpoints/best_model.pth')
+
+    sfcp = str(experiment_dir) + '/checkpoints/best_model.pth'
+    classifier = MODEL.get_model(NUM_CLASSES)
+    if hasCuda_:
+        classifier = classifier.cuda()
+        checkpoint = torch.load(sfcp)
+    else:
+        checkpoint = torch.load(sfcp, map_location=torch.device('cpu'))
+    
     classifier.load_state_dict(checkpoint['model_state_dict'])
     classifier = classifier.eval()
 
@@ -136,7 +147,9 @@ def main(args):
                     batch_data[:, :, 3:6] /= 1.0
 
                     torch_data = torch.Tensor(batch_data)
-                    torch_data = torch_data.float().cuda()
+                    if hasCuda_:
+                        torch_data = torch_data.float().cuda()
+
                     torch_data = torch_data.transpose(2, 1)
                     seg_pred, _ = classifier(torch_data)
                     batch_pred_label = seg_pred.contiguous().cpu().data.max(2)[1].numpy()
